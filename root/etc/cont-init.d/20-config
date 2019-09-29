@@ -1,0 +1,44 @@
+#!/usr/bin/with-contenv bash
+
+#create murmur.ini if not exists in /config and change database location to /config
+if [ ! -f /config/murmur.ini ]
+
+then
+  #replace default database locatie so we survive a container update
+  sed -i 's#/var/lib/murmur/murmur.sqlite#/config/murmur.sqlite#g' /etc/murmur.ini
+  
+  #replace ;uname= with uname=abc so program switches to user abc when started as root for security reasons
+  sed -i 's#;uname=#uname=abc#g' /etc/murmur.ini
+  
+  #disable ice
+  #sed -i 'ice="/s/^/;/'
+
+  #Copy ini file to mapped volume so we survive a container update
+  cp /etc/murmur.ini /config
+ 
+ # permissions
+chmod -R 770 \
+	/config \
+	/var/lib/murmur \
+	/etc/init.d/murmur \
+	/var/tmp \
+	/var/run/murmur \
+	/usr/bin/murmurd \
+	/run/murmur && \
+
+chown -R root:911 \
+	/config \
+	/var/lib/murmur \
+	/etc/init.d/murmur \
+	/var/tmp \
+	/var/run/murmur \
+	/usr/bin/murmurd \
+	/run/murmur && \
+chmod -R g+w \
+	/config
+chmod -R 644 /etc/logrotate.d
+ 
+  # persissions
+  #chmod g+w /config
+  #chown -R root:abc /config
+fi
