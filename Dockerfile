@@ -3,7 +3,7 @@ FROM thies88/base-alpine
 # set version label
 ARG BUILD_DATE
 ARG VERSION
-LABEL build_version="Thies88 version:- ${VERSION} Build-date:- ${BUILD_DATE}"
+LABEL build_version="base-alpine-murmur version:- ${VERSION} Build-date:- ${BUILD_DATE}"
 LABEL maintainer="Thies88"
 
 # add local files for our application
