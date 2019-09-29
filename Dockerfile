@@ -10,7 +10,7 @@ LABEL maintainer="Thies88"
 COPY root/ /
 
 # environment settings
-ENV S6_BEHAVIOUR_IF_STAGE2_FAILS=2
+#ENV S6_BEHAVIOUR_IF_STAGE2_FAILS=2
 
 RUN mkdir -p /run/murmur && \
 apk add --no-cache --update murmur && \
